@@ -1,0 +1,174 @@
+---
+title: "Class 6 R Functions"
+author: "Barry Grant"
+date: "10/18/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# This is a H1
+This is my class 6 work. THis will be **bold**
+
+## A H2 
+
+### A level 3 headding H3
+
+```{r}
+plot(1:10)
+```
+
+
+Read files again...
+
+```{r}
+read.table("test1.txt", sep=",", header=TRUE)
+```
+
+```{r}
+read.csv("test1.txt")
+```
+
+```{r}
+read.table("test2.txt", sep="$", header=T)
+```
+
+```{r}
+read.table("test3.txt")
+```
+
+Our first silly function
+
+```{r}
+add <- function(x, y=1) {  
+    # Sum the input x and y
+    x + y
+}
+```
+
+```{r}
+add( x=c(5, 6, 1, 5, 10), y=100 )
+```
+
+```{r}
+add( c(5, 5, NA, 7) )
+```
+
+
+```{r}
+x <- range( c(5,2,7,10) )
+x[1] # min value
+x[2] # max value
+```
+
+A second funcrtion
+
+```{r}
+rescale <- function(x) {
+   rng <-range(x)
+   (x - rng[1]) / (rng[2] - rng[1])
+}
+```
+
+```{r}
+rescale( c(1, 2, NA, 5) )
+```
+```{r}
+x <- c(1, 2, NA, 5) 
+range(x, na.rm=TRUE)
+```
+
+```{r}
+rescale2 <- function(x) {
+   rng <-range(x, na.rm=TRUE)
+   (x - rng[1]) / (rng[2] - rng[1])
+}
+```
+
+```{r}
+rescale2( c(1, 2, NA, 5) )
+```
+
+```{r}
+rescale3 <- function(x, na.rm=TRUE, plot=FALSE) {
+
+    rng <-range(x, na.rm=na.rm)
+    print("Hello")
+
+   answer <- (x - rng[1]) / (rng[2] - rng[1])
+   return(answer)
+   
+   print("is it me you are looking for?")
+
+   if(plot) { 
+      plot(answer, typ="b", lwd=4) 
+   }
+   print("I can see it in ...")
+   return(answer)
+}
+
+```
+
+```{r}
+rescale3(1:10, plot=TRUE)
+```
+
+Install the bio3d package with 
+```{r}
+#install.packages("bio3d")
+```
+
+```{r}
+library(bio3d)
+```
+
+```{r}
+x <- read.pdb("4ake")
+```
+
+```{r}
+is.list(x)
+x
+```
+
+```{r}
+# Can you improve this analysis code?
+library(bio3d)
+s1 <- read.pdb("4AKE")  # kinase with drug
+s2 <- read.pdb("1AKE")  # kinase no drug
+s3 <- read.pdb("1E4Y")  # kinase with drug
+
+s1.chainA <- trim.pdb(s1, chain="A", elety="CA")
+s2.chainA <- trim.pdb(s2, chain="A", elety="CA")
+s3.chainA <- trim.pdb(s3, chain="A", elety="CA")
+
+s1.b <- s1.chainA$atom$b
+s2.b <- s2.chainA$atom$b
+s3.b <- s3.chainA$atom$b
+
+plotb3(s1.b, sse=s1.chainA, typ="l", ylab="Bfactor")
+plotb3(s2.b, sse=s2.chainA, typ="l", ylab="Bfactor")
+plotb3(s3.b, sse=s3.chainA, typ="l", ylab="Bfactor")
+```
+
+```{r}
+plotb3(s1.b, sse=s1.chainA, typ="l", ylab="Bfactor")
+points(s2.b, type="l", col="blue", lwd=2)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
